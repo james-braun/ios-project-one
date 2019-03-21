@@ -24,10 +24,17 @@ let players = [
 var teamSharks: [[String: String]] = []
 var teamDragons: [[String: String]] = []
 var teamRaptor: [[String: String]] = []
+var teamSharksNoExp: [[String: String]] = []
+var teamDragonsNoExp: [[String: String]] = []
+var teamRaptorNoExp: [[String: String]] = []
 var sharkCount = 0
 var dragonCount = 0
 var raptorCount = 0
+var sharkCountNoExp = 0
+var dragonCountNoExp = 0
+var raptorCountNoExp = 0
 var totalCount = 0
+let numberOfTeams = 3
 for player in players {
     if player["Experience"]! == "true" && sharkCount <= totalCount {
         teamSharks.append(player)
@@ -44,18 +51,37 @@ for player in players {
             sharkCount += 1
         }
         totalCount += 1
+        
     }
 }
+
+func createNoExperienceTeams(players: [[String: String]]) -> (sharks: [[String: String]], dragons: [[String: String]], raptors: [[String: String]]) {
+    var count = 1
+    for player in players {
+        if player["Experience"]! == "false" {
+            switch count % numberOfTeams {
+                case 0: teamSharksNoExp.append(player)
+                case 1: teamDragonsNoExp.append(player)
+                case 2: teamRaptorNoExp.append(player)
+                default: print("error")
+            }
+        }
+        print(count % numberOfTeams)
+        count += 1
+    }
+    return (teamSharksNoExp, teamDragonsNoExp, teamRaptorNoExp)
+}
+let NoExp = createNoExperienceTeams(players: players)
 print("shark team")
-for player in teamSharks {
+for player in NoExp.sharks {
    print(player)
 }
 print("dragon team")
-for player in teamDragons {
+for player in teamDragonsNoExp {
     print(player)
 }
 print("raptor team")
-for player in teamRaptor {
+for player in teamRaptorNoExp {
     print(player)
 }
 Int("43")
