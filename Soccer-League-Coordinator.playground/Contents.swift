@@ -55,10 +55,10 @@ for player in players {
     }
 }
 
-func createNoExperienceTeams(players: [[String: String]]) -> (sharks: [[String: String]], dragons: [[String: String]], raptors: [[String: String]]) {
+func createNoExperienceTeams(players: [[String: String]], experience: String) -> (sharks: [[String: String]], dragons: [[String: String]], raptors: [[String: String]]) {
     var count = 1
     for player in players {
-        if player["Experience"]! == "false" {
+        if player["Experience"]! == experience {
             switch count % numberOfTeams {
                 case 0: teamSharksNoExp.append(player)
                 case 1: teamDragonsNoExp.append(player)
@@ -66,12 +66,11 @@ func createNoExperienceTeams(players: [[String: String]]) -> (sharks: [[String: 
                 default: print("error")
             }
         }
-        print(count % numberOfTeams)
         count += 1
     }
     return (teamSharksNoExp, teamDragonsNoExp, teamRaptorNoExp)
 }
-let NoExp = createNoExperienceTeams(players: players)
+let NoExp = createNoExperienceTeams(players: players, experience: "true")
 print("shark team")
 for player in NoExp.sharks {
    print(player)
