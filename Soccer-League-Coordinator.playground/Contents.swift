@@ -1,4 +1,4 @@
-let players = [
+let players = [     // list of players and their info.
     ["Name": "Joe Smith", "Height": "42", "Experience": "true", "Parent": "Jim and Jan Smith"],
     ["Name": "Jill Tanner", "Height": "38", "Experience": "true", "Parent": "Clara Tanner"],
     ["Name": "Bill Bon", "Height": "43", "Experience": "true", "Parent": "Sara and Jenny Bon"],
@@ -19,18 +19,10 @@ let players = [
     ["Name": "Herschel Krostofski", "Height": "45", "Experience": "true", "Parent": "Hyman and Rachel Krostofski"]
 ]
 
-// print(players[1])
-
-var noExpPlayers: [[String: String]] = []
-var expPlayers: [[String: String]] = []
-var teamSharks: [[String: String]] = []
-var teamDragons: [[String: String]] = []
-var teamRaptors: [[String: String]] = []
-var sharkCount = 0
-var dragonCount = 0
-var raptorCount = 0
-var totalCount = 0
-let numberOfTeams = 3
+let teamNames = ["Dragons", "Sharks", "Raptors"] // Holds Team Names
+var noExpPlayers: [[String: String]] = []  // Holds list of players with out experience
+var expPlayers: [[String: String]] = []    // Holds list of players with experience
+let numberOfTeams = teamNames.count                      // Specifiies number of teams
 
 func dividePlayersIntoExperiencedAndInexperienced(usingPlayers players: [[String: String]]) {
     for player in players {
@@ -42,38 +34,76 @@ func dividePlayersIntoExperiencedAndInexperienced(usingPlayers players: [[String
     }
 }
 
+// function call
 dividePlayersIntoExperiencedAndInexperienced(usingPlayers: players)
 
-func createBalancedTeamFragment(teamFragment: [[String: String]]) -> [[String: String]] {
-    var tempFragment: [[String: String]] = teamFragment
+// Balance out the arrays of experience and no experience players so that their Hieghts will be within 1.5 inches of each other
+func createBalancedHeightTeamFragment(teamFragment: [[String: String]]) -> [[String: String]] {
+    var tempFragment: [[String: String]] = teamFragment // mutable temperaary varible
+    
+    // bubble sort the array
     for count in 0..<tempFragment.count {
         for count2 in (count)..<tempFragment.count {
             if Double(tempFragment[count]["Height"]!)! < Double(tempFragment[count2]["Height"]!)! {
-                var temp = tempFragment[count2]
+                let temp = tempFragment[count2]
                 tempFragment[count2] = tempFragment[count]
                 tempFragment[count] = temp
             }
         }
     }
-    for count in stride(from: 0, to: 8, by: 2) {
-        print("hello")
-        var temp = tempFragment[count + 1]
-        tempFragment[count + 1] = tempFragment[tempFragment.count - count - 1]
-        tempFragment[tempFragment.count] = temp
-    }
+
+    // swap the first and last element in the array
+    let temp = tempFragment[0]
+    tempFragment[0] = tempFragment[tempFragment.count - 1]
+    tempFragment[tempFragment.count - 1] = temp
+    
+    // return the array
     return tempFragment
 }
 
+// function calls
+noExpPlayers = createBalancedHeightTeamFragment(teamFragment: noExpPlayers)
+expPlayers = createBalancedHeightTeamFragment(teamFragment: expPlayers)
 
-print("No Experience")
-for player in noExpPlayers {
-   print(player)
+/***************************************
+ Extension Array code curtisy:
+ https://www.hackingwithswift.com/example-code/language/how-to-split-an-array-into-chunks
+ ***************************************/
+extension Array {
+    func chunked(into size: Int) -> [[Element]] {
+        return stride(from: 0, to: count, by: size).map {
+            Array(self[$0 ..< Swift.min($0 + size, count)])
+        }
+    }
+}
+
+// divide arrays into an array of teams
+var noExperience = noExpPlayers.chunked(into: numberOfTeams)
+var experienced = expPlayers.chunked(into: numberOfTeams)
+
+// combine no experienced players with experience
+for group in 0..<noExperience.count {
+    noExperience[group] += experienced[group]
+}
+let teams: [[[String: String]]] = noExperience
+
+// compute and print each teams average Height
+var teamCount = 0
+for team in teams {
+    var sum = 0.0
+    var numberOfPlayers = 0.0
+    for player in team {
+        sum += Double(player["Height"]!)!
+        numberOfPlayers += 1
+    }
+    print("the average height of team \(teamNames[teamCount]) is \(sum/numberOfPlayers)")
+    teamCount += 1
 }
 
 
 
 
-print("No Experience")
-for player in createBalancedTeamFragment(teamFragment: noExpPlayers) {
-    print(player)
-}
+
+
+
+
