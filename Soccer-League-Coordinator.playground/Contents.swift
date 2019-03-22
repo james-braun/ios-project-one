@@ -20,9 +20,10 @@ let players = [     // list of players and their info.
 ]
 
 let teamNames = ["Dragons", "Sharks", "Raptors"] // Holds Team Names
+let numberOfTeams = teamNames.count        // Specifiies number of teams
+let practiceTimes = ["March 17, 1pm", "March 17, 3pm", "March 18, 1pm"]
 var noExpPlayers: [[String: String]] = []  // Holds list of players with out experience
 var expPlayers: [[String: String]] = []    // Holds list of players with experience
-let numberOfTeams = teamNames.count                      // Specifiies number of teams
 
 func dividePlayersIntoExperiencedAndInexperienced(usingPlayers players: [[String: String]]) {
     for player in players {
@@ -100,8 +101,18 @@ for team in teams {
     teamCount += 1
 }
 
-
-
+// itterate though teams and print letters
+var letters: [String] = []
+teamCount = 0
+for team in teams {
+    for player in team {
+        letters.append("\n\nDear \(player["Parent"]!),\nYour child \(player["Name"]!) will be on team \(teamNames[teamCount]).\nPractice is at \(practiceTimes[teamCount]).\nSincerely\nJames Braun")
+    }
+    teamCount += 1
+}
+for letter in letters {
+    print(letter)
+}
 
 
 
