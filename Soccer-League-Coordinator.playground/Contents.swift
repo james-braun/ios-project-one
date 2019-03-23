@@ -20,7 +20,7 @@ let players = [     // list of players and their info.
 ]
 
 let teamNames = ["Dragons", "Sharks", "Raptors"] // Holds Team Names
-let numberOfTeams = teamNames.count        // Specifiies number of teams
+let halfOfNumberOnTeams = players.count / teamNames.count / 2   // Specifiies split number of teams
 let practiceTimes = ["March 17, 1pm", "March 17, 3pm", "March 18, 1pm"]
 var noExpPlayers: [[String: String]] = []  // Holds list of players with out experience
 var expPlayers: [[String: String]] = []    // Holds list of players with experience
@@ -79,8 +79,14 @@ extension Array {
 }
 
 // divide arrays into an array of teams
-var noExperience = noExpPlayers.chunked(into: numberOfTeams)
-var experienced = expPlayers.chunked(into: numberOfTeams)
+var noExperience = noExpPlayers.chunked(into: halfOfNumberOnTeams)
+if noExperience[noExperience.count - 1].count < noExperience[0].count {
+    noExperience[0] += noExperience[noExperience.count - 1]
+}
+var experienced = expPlayers.chunked(into: halfOfNumberOnTeams)
+if experienced[experienced.count - 1].count < experienced[0].count {
+    experienced[0] += experienced[experienced.count - 1]
+}
 
 // combine no experienced players with experienced players
 for group in 0..<noExperience.count {
@@ -97,8 +103,10 @@ for team in teams {
         sum += Double(player["Height"]!)!
         numberOfPlayers += 1
     }
-    print("the average height of team \(teamNames[teamCount]) is \(sum/numberOfPlayers)")
-    teamCount += 1
+    if teamCount != teamNames.count {
+        print("the average height of team \(teamNames[teamCount]) is \(sum/numberOfPlayers)")
+        teamCount += 1
+    }
 }
 
 // itterate though teams and print letters
@@ -106,7 +114,9 @@ var letters: [String] = []
 teamCount = 0
 for team in teams {
     for player in team {
+        if teamCount != teamNames.count {
         letters.append("\n\nDear \(player["Parent"]!),\nYour child \(player["Name"]!) will be on team \(teamNames[teamCount]).\nPractice is at \(practiceTimes[teamCount]).\nSincerely\nJames Braun")
+        }
     }
     teamCount += 1
 }
