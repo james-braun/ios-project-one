@@ -11,7 +11,7 @@ let players = [     // list of players and their info.
     ["Name": "Sal Dall", "Height": "41", "Experience": "false", "Parent": "Gala Dall"],
     ["Name": "Joe Kavalier", "Height": "39", "Experience": "false", "Parent": "Sam and Elaine Kavalier"],
     ["Name": "Ben Finkelstein", "Height": "44", "Experience": "false", "Parent": "Aaron and Jill Finkelstein"],
-    ["Name": "Diego Solo", "Height": "41", "Experience": "true", "Parent": "Robin and SDarika Solo"],
+    ["Name": "Diego Solo", "Height": "41", "Experience": "true", "Parent": "Robin and Sarika Solo"],
     ["Name": "Chloe Alaska", "Height": "47", "Experience": "false", "Parent": "David and Jamie Alaska"],
     ["Name": "Arnold Willis", "Height": "43", "Experience": "false", "Parent": "Claire Willis"],
     ["Name": "Phillip Helm", "Height": "44", "Experience": "true", "Parent": "Thomas Helm and Eva Jones"],
