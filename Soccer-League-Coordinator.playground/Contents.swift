@@ -80,10 +80,12 @@ extension Array {
 
 // divide arrays into an array of teams
 var noExperience = noExpPlayers.chunked(into: halfOfNumberOnTeams)
+// if extra players add to first team
 if noExperience[noExperience.count - 1].count < noExperience[0].count {
     noExperience[0] += noExperience[noExperience.count - 1]
 }
 var experienced = expPlayers.chunked(into: halfOfNumberOnTeams)
+// if extra players add to first team
 if experienced[experienced.count - 1].count < experienced[0].count {
     experienced[0] += experienced[experienced.count - 1]
 }
@@ -103,6 +105,7 @@ for team in teams {
         sum += Double(player["Height"]!)!
         numberOfPlayers += 1
     }
+    // if you don't have extra players print average
     if teamCount != teamNames.count {
         print("the average height of team \(teamNames[teamCount]) is \(sum/numberOfPlayers)")
         teamCount += 1
@@ -114,12 +117,15 @@ var letters: [String] = []
 teamCount = 0
 for team in teams {
     for player in team {
+        // if you don't have extra team create letter
         if teamCount != teamNames.count {
         letters.append("\n\nDear \(player["Parent"]!),\nYour child \(player["Name"]!) will be on team \(teamNames[teamCount]).\nPractice is at \(practiceTimes[teamCount]).\nSincerely\nJames Braun")
         }
     }
     teamCount += 1
 }
+
+// print letters
 for letter in letters {
     print(letter)
 }
