@@ -82,11 +82,11 @@ extension Array {
 var noExperience = noExpPlayers.chunked(into: numberOfTeams)
 var experienced = expPlayers.chunked(into: numberOfTeams)
 
-// combine no experienced players with experience
+// combine no experienced players with experienced players
 for group in 0..<noExperience.count {
     noExperience[group] += experienced[group]
 }
-let teams: [[[String: String]]] = noExperience
+let teams: [[[String: String]]] = noExperience  // Holds array of teams
 
 // compute and print each teams average Height
 var teamCount = 0
